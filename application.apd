@@ -1,0 +1,33 @@
+[Application]
+defaultName = PHYSICAL
+interface = lib:threeplane.ui
+continuous = 0
+sharedSlot = Real-Time
+calibrations = RealTimeShimming, Adjustments, CFtuning
+controlScript = control.js
+reconScript = recon.js
+singleJSEngine = false
+
+[excitationrect]
+type = waveform
+file = we_ns_rect.spv
+linearPhaseIncrement = 180
+quadraticPhaseIncrement = 110
+allowDisable = true
+
+[excitationslr]
+type = waveform
+file = we_ns_slr_lp.spv
+linearPhaseIncrement = 180
+quadraticPhaseIncrement = 110
+allowDisable = true
+
+[echodelay]
+type = delay
+duration = 0
+
+[readout]
+type = waveform
+file = physical.spv
+associatedRF = excitationrect
+loopIndex=0
