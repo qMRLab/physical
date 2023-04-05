@@ -21,11 +21,11 @@ observer.scanDisabled.connect(rth.deactivateScanButton);
 //   }
 // }
 
-var viewKsIndexKey = "acquisition.<E1R>.index";
-var kspace = new RthReconKSpace();
-if (!this.kspace.loadFromReadoutTags(rth.readoutTags("readout"),viewKsIndexKey)) {
-  RTHLOGGER_ERROR("Could not load k-space trajectory from readout tags");
-}
+// var viewKsIndexKey = "acquisition.<E1R>.index";
+// var kspace = new RthReconKSpace();
+// if (!this.kspace.loadFromReadoutTags(rth.readoutTags("readout"),viewKsIndexKey)) {
+//   RTHLOGGER_ERROR("Could not load k-space trajectory from readout tags");
+// }
 
 function reconBlock(input,indexTR,indexEcho) {
   
@@ -524,7 +524,7 @@ function ExportBlock(input,inputRaw,trName){
   });
 
   this.imageExportRaw.setInput(inputRaw);
-  this.imageExportRaw.setKSpace(kspace);
+  //this.imageExportRaw.setKSpace(kspace);
 
   //this.imageExport.saveFileSeries(true);
 
