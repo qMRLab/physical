@@ -40,7 +40,7 @@
 			<key>script</key>
 			<string>var echoSpacing  = 1.5;
 var peSteps = 32;
-var sampFactor = 0.99;
+var sampFactor = 1;
 
 
 var sampRate = SB['&lt;E1R&gt;.samplingRate'];
@@ -169,7 +169,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 					<key>anchoredToSBKey</key>
 					<string>&lt;E7R&gt;.readoutEnd</string>
 					<key>position</key>
-					<real>18.918506622314453</real>
+					<real>18.923625946044922</real>
 				</dict>
 				<key>editableName</key>
 				<string>Phase Encode Gradient 1</string>
@@ -311,7 +311,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 				<key>maxVal</key>
 				<real>1.1467385292053223</real>
 				<key>plateauDuration</key>
-				<real>1.013759970664978</real>
+				<real>1.0240000486373901</real>
 				<key>pluginClass</key>
 				<string>SBPlateauTrapezoid</string>
 				<key>pluginName</key>
@@ -407,7 +407,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 				<key>maxVal</key>
 				<real>1.1467385292053223</real>
 				<key>plateauDuration</key>
-				<real>1.013759970664978</real>
+				<real>1.0240000486373901</real>
 				<key>pluginClass</key>
 				<string>SBPlateauTrapezoid</string>
 				<key>pluginName</key>
@@ -503,7 +503,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 				<key>maxVal</key>
 				<real>1.1467385292053223</real>
 				<key>plateauDuration</key>
-				<real>1.013759970664978</real>
+				<real>1.0240000486373901</real>
 				<key>pluginClass</key>
 				<string>SBPlateauTrapezoid</string>
 				<key>pluginName</key>
@@ -599,7 +599,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 				<key>maxVal</key>
 				<real>1.1467385292053223</real>
 				<key>plateauDuration</key>
-				<real>1.013759970664978</real>
+				<real>1.0240000486373901</real>
 				<key>pluginClass</key>
 				<string>SBPlateauTrapezoid</string>
 				<key>pluginName</key>
@@ -695,7 +695,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 				<key>maxVal</key>
 				<real>1.1467385292053223</real>
 				<key>plateauDuration</key>
-				<real>1.013759970664978</real>
+				<real>1.0240000486373901</real>
 				<key>pluginClass</key>
 				<string>SBPlateauTrapezoid</string>
 				<key>pluginName</key>
@@ -755,7 +755,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 					<key>anchoredToSBKey</key>
 					<string>&lt;Area Trapezoid&gt;.end</string>
 					<key>position</key>
-					<real>10.622900009155273</real>
+					<real>10.628019332885742</real>
 				</dict>
 				<key>duration</key>
 				<real>5.3000001907348633</real>
@@ -788,7 +788,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 					<key>anchoredToSBKey</key>
 					<string>&lt;E6&gt;.end</string>
 					<key>position</key>
-					<real>9.33929443359375</real>
+					<real>9.3444137573242188</real>
 				</dict>
 				<key>area</key>
 				<real>10</real>
@@ -835,7 +835,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 					<key>anchoredToSBKey</key>
 					<string>&lt;FermiPlus&gt;.end</string>
 					<key>position</key>
-					<real>15.922900199890137</real>
+					<real>15.928019523620605</real>
 				</dict>
 				<key>area</key>
 				<real>10</real>
@@ -882,7 +882,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 					<key>anchoredToSBKey</key>
 					<string>&lt;Area Trapezoid 1&gt;.end</string>
 					<key>position</key>
-					<real>17.206506073585871</real>
+					<real>17.21162539731634</real>
 				</dict>
 				<key>editableName</key>
 				<string>E7R</string>
@@ -951,7 +951,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 					<key>anchoredToSBKey</key>
 					<string>&lt;Area Trapezoid&gt;.end</string>
 					<key>position</key>
-					<real>10.622900009155273</real>
+					<real>10.628019332885742</real>
 				</dict>
 				<key>duration</key>
 				<real>5.3000001907348633</real>
@@ -1021,7 +1021,7 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 					<key>anchoredToSBKey</key>
 					<string>&lt;E7R&gt;.readoutEnd</string>
 					<key>position</key>
-					<real>18.918506622314453</real>
+					<real>18.923625946044922</real>
 				</dict>
 				<key>editableName</key>
 				<string>Phase Encode Gradient 3</string>
@@ -1396,9 +1396,9 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 		<key>width</key>
 		<integer>1440</integer>
 		<key>x</key>
-		<integer>0</integer>
+		<integer>102</integer>
 		<key>y</key>
-		<integer>48</integer>
+		<integer>33</integer>
 	</dict>
 	<key>maxReadoutRate</key>
 	<real>125</real>
@@ -1616,9 +1616,9 @@ SB.message('BS pulse constant:' + kbs + 'rad/G^2');
 	<key>t2</key>
 	<real>150</real>
 	<key>timeWithinTr</key>
-	<real>4.1827734374999999</real>
+	<real>3.0627734375000002</real>
 	<key>tr</key>
-	<real>19.178882598876953</real>
+	<real>19.184001922607422</real>
 	<key>trNum</key>
 	<integer>112</integer>
 	<key>waveSamplingRate</key>

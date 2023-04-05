@@ -237,7 +237,7 @@ controlWidget.inputWidget_TR.value   = minTR;
 
 controlWidget.inputWidget_TE.minimum = minTE;
 controlWidget.inputWidget_TE.maximum = 10;
-controlWidget.inputWidget_TE.value   = minTE;
+controlWidget.inputWidget_TE.value   = 3.5;
 
 
 function sessionClicked(chck){
