@@ -69,7 +69,7 @@ var scannerTR = new RthUpdateGetTRCommand(sequenceId, [], []);
 rth.addCommand(scannerTR);
 var minTR = scannerTR.tr();
 var startingTR = 20;
-RTHLOGGER_WARNING("Physical Minimum TR: " + minTR);
+RTHLOGGER_WARNING("PHYSICAL Minimum TR: " + minTR);
 
 //var scannerTR0 = new RthUpdateGetTRCommand(sequenceId, [0,0,0,1], []);
 //var scannerTR1 = new RthUpdateGetTRCommand(sequenceId, [0,0,0,1], [1]);
@@ -231,13 +231,13 @@ controlWidget.inputWidget_FOV.minimum = startingFOV;
 controlWidget.inputWidget_FOV.maximum = startingFOV*2;
 controlWidget.inputWidget_FOV.value   = startingFOV;
 
-controlWidget.inputWidget_TR.minimum = 25;
+controlWidget.inputWidget_TR.minimum = minTR;
 controlWidget.inputWidget_TR.maximum = minTR + 30;
-controlWidget.inputWidget_TR.value   = 25;
+controlWidget.inputWidget_TR.value   = minTR;
 
 controlWidget.inputWidget_TE.minimum = minTE;
 controlWidget.inputWidget_TE.maximum = 10;
-controlWidget.inputWidget_TE.value   = 3.5;
+controlWidget.inputWidget_TE.value   = minTE;
 
 
 function sessionClicked(chck){

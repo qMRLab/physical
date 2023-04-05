@@ -21,6 +21,12 @@ observer.scanDisabled.connect(rth.deactivateScanButton);
 //   }
 // }
 
+var viewKsIndexKey = "acquisition.<E1R>.index";
+var kspace = new RthReconKSpace();
+if (!this.kspace.loadFromReadoutTags(rth.readoutTags("readout"),viewKsIndexKey)) {
+  RTHLOGGER_ERROR("Could not load k-space trajectory from readout tags");
+}
+
 function reconBlock(input,indexTR,indexEcho) {
   
   var that  = this;
@@ -132,25 +138,6 @@ function  coilBlock(input,index){
 
   });
   this.router.setInput(this.info.output());
-
-  //this.packCoils = new RthReconImagePack();
-  //this.packCoils.objectName = "Pack Coils" + index;
-// For each `coil we need sort and FFT.
-  //this.sos = new RthReconImageSumOfSquares();
-  //this.sos.objectName = "SoS" + index;
-
-
-  //this.splitter = RthReconSplitter();
-  //this.splitter.objectName = "splitOutput" + index;
-  //this.splitter.setInput(this.sos.output());
-
-
-  //this.threePlane = new RthImageThreePlaneOutput();
-  //this.threePlane.setInput(this.splitter.output(0));
-  //this.threePlane.objectName = "gorsel" + index;
-
-  //this.exporter  = new ExportBlock(this.splitter.output(1),index);
-
 }
 
 function  infoBlock(input,index){
@@ -199,13 +186,6 @@ function connectCoils(coils){
 
 observer.coilsChanged.connect(connectCoils);
 
-//var packCoils = new RthReconImagePack();
-//packCoils.objectName = "Pack Coils";
-// For each `coil we need sort and FFT.
-//var sos = new RthReconImageSumOfSquares();
-
-
-
 rth.importJS("lib:RthImageThreePlaneOutput.js");
 
 function ExportBlock(input,inputRaw,trName){
@@ -214,10 +194,6 @@ function ExportBlock(input,inputRaw,trName){
 
   var date = new Date();
 
-  
-
-  //var imageExport = new RthReconToQmrlab();
-  // This is a bit annoying, but the only option for now. 
   this.imageExport = new RthReconImageExport();
 
   this.changeInformation = new RthReconImageChangeInformation();
@@ -520,11 +496,11 @@ function ExportBlock(input,inputRaw,trName){
   ]);
   this.imageExport.observedKeysChanged.connect(function(keys){
 
-    var exportDirectory = "qMRLabAcq/rthRecon/";
+    var exportDirectory = "VENUS/BIDS/";
     var subjectBIDS  = "sub-" + keys["mri.SubjectBIDS"];
     var sessionBIDS = (keys["mri.SessionBIDS"]) ? "_ses-" + keys["mri.SessionBIDS"] : "";
     //var acquisitionBIDS = (keys["mri.AcquisitionBIDS"]) ? "_acq-" + keys["mri.AcquisitionBIDS"] : "";
-    var exportFileName  = exportDirectory + subjectBIDS + sessionBIDS + trName + "_TB1AFI.dat";
+    var exportFileName  = exportDirectory + subjectBIDS + sessionBIDS + trName + "_PHYSICAL.dat";
     that.imageExport.setFileName(exportFileName);
   });
   
@@ -539,53 +515,20 @@ function ExportBlock(input,inputRaw,trName){
     "mri.SessionBIDS"
   ]);
   this.imageExportRaw.observedKeysChanged.connect(function(keys){
-    var exportDirectory = "qMRLabAcq/rthRaw/";
+    var exportDirectory = "VENUS/MRD/";
     var subjectBIDS  = "sub-" + keys["mri.SubjectBIDS"];
     var sessionBIDS = (keys["mri.SessionBIDS"]) ? "_ses-" + keys["mri.SessionBIDS"] : "";
     //var acquisitionBIDS = (keys["mri.AcquisitionBIDS"]) ? "_acq-" + keys["mri.AcquisitionBIDS"] : "";
-    var exportFileNameRaw  = exportDirectory + subjectBIDS + sessionBIDS + trName + "_TB1AFIraw.dat";
+    var exportFileNameRaw  = exportDirectory + subjectBIDS + sessionBIDS + trName + "_PHYSICALraw.dat";
     that.imageExportRaw.setFileName(exportFileNameRaw);
   });
 
   this.imageExportRaw.setInput(inputRaw);
-  //this.imageExportRaw.setKSpace(kspace);
+  this.imageExportRaw.setKSpace(kspace);
 
   //this.imageExport.saveFileSeries(true);
 
 }
-
-
-//var splitter = RthReconSplitter();
-//splitter.objectName = "splitOutput";
-//splitter.setInput(sos.output());
-
-//var threePlane = new RthImageThreePlaneOutput();
-//threePlane.setInput(splitter.output(0));
-
-//var exporter  = new ExportBlock(splitter.output(1),packCoils.output());
-
-//var getRxAtten = new RthUpdateGetRxAttenuationCommand(sequenceId, "readout"); rth.addCommand(getRxAtten);
-//var atten = getRxAtten.receivedData();
-//RTHLOGGER_WARNING("AFI recon attenuation received " + atten);
-
-//var rxAtten0 = new RthReconRawApplyRxAttenuation();
-//rxAtten0.objectName = "Rx Atten 0";
-//rxAtten0.lowerLimit = 0.3;
-//rxAtten0.upperLimit = 0.75;
-//rxAtten0.newAttenuation.connect(function(newAtten) {
-//  RTHLOGGER_ERROR("Received atten is (afi in function tr1)" + newAtten);
-//  rth.addCommand(new RthUpdateFloatParameterCommand(sequenceId, "readout", "setRxAttenuation", "", newAtten));
-//});
-
-//var rxAtten1 = new RthReconRawApplyRxAttenuation();
-//rxAtten1.objectName = "Rx Atten 1";
-//rxAtten1.lowerLimit = 0.3;
-//rxAtten1.upperLimit = 0.75;
-//rxAtten1.newAttenuation.connect(function(newAtten) {
-//  RTHLOGGER_ERROR("Received atten is (afi in function tr2)" + newAtten);
-//  rth.addCommand(new RthUpdateFloatParameterCommand(sequenceId, "readout", "setRxAttenuation", "", newAtten));
-//});
-
 
 var sosArray = new Array();
 var packArray = new Array();
@@ -593,45 +536,39 @@ var splitterArray = new Array();
 var tpArray = new Array();
 var xpArray = new Array();
 
-// There should be 14 of these guys, we have 14 images...
-for (var it = 0; it<=13; it++){
-  sosArray[it] = new RthReconImageSumOfSquares();
-  sosArray[it].objectName = "SoS" + (it+1)
-  packArray[it] = new RthReconImagePack();
-  packArray[it].objectName = "coilPack" + (it+1);
-  splitterArray[it] = new RthReconSplitter();
-  splitterArray[it].objectName = "splitOutput" + (it+1);
-  splitterArray[it].setInput(this.sosArray[it].output());
-  tpArray[it] = new RthImageThreePlaneOutput();
-  tpArray[it].setInput(this.splitterArray[it].output(0));
-  xpArray[it]  = new ExportBlock(this.splitterArray[it].output(1),packArray[it].output(),"_echo-" + (it+1));
+
+var it = 0;
+for (var curTR=0; curTR<=1; curTR++){
+  for (var echoIdx=0; echoIdx<=6; echoIdx++){
+    sosArray[it] = new RthReconImageSumOfSquares();
+    sosArray[it].objectName = "SoS" + (it+1)
+    packArray[it] = new RthReconImagePack();
+    packArray[it].objectName = "coilPack" + (it+1);
+    splitterArray[it] = new RthReconSplitter();
+    splitterArray[it].objectName = "splitOutput" + (it+1);
+    splitterArray[it].setInput(this.sosArray[it].output());
+    tpArray[it] = new RthImageThreePlaneOutput();
+    tpArray[it].setInput(this.splitterArray[it].output(0));
+    if (curTR == 0){
+      xpArray[it]  = new ExportBlock(this.splitterArray[it].output(1),packArray[it].output(),"_acq-plusBS" + "_echo-0" + (echoIdx+1));
+    } else {
+      xpArray[it]  = new ExportBlock(this.splitterArray[it].output(1),packArray[it].output(),"_acq-minusBS" + "_echo-0" + (echoIdx+1));
+    }  
+    it = it + 1;
+  }
 }
 
-// sos0 = new RthReconImageSumOfSquares();
-// sos0.objectName = "SoS0";
-
-// var sos1 = new RthReconImageSumOfSquares();
-// sos1.objectName = "SoS1";
-
-// var pack0 = new RthReconImagePack();
-// pack0.objectName = "coilPack0";
-
-// var pack1 = new RthReconImagePack();
-// pack1.objectName = "coilPack1";
-
-// var splitter0 = RthReconSplitter();
-// splitter0.objectName = "splitOutput 0";
-// splitter0.setInput(this.sos0.output());
-
-// var splitter1 = RthReconSplitter();
-// splitter1.objectName = "splitOutput 1";
-// splitter1.setInput(this.sos1.output());
-
-// threePlane0 = new RthImageThreePlaneOutput();
-// threePlane0.setInput(this.splitter0.output(0));
-
-// threePlane1 = new RthImageThreePlaneOutput();
-// threePlane1.setInput(this.splitter1.output(0));
-
-// exporter0  = new ExportBlock(this.splitter0.output(1),pack0.output(),'_acq-tr1');
-// exporter1  = new ExportBlock(this.splitter1.output(1),pack1.output(),'_acq-tr2');
+// // This nested loop mirrors the one sent to the 
+// // reconblock for consisteny with BIDS tags.
+// for (var it = 0; it<=13; it++){
+//   sosArray[it] = new RthReconImageSumOfSquares();
+//   sosArray[it].objectName = "SoS" + (it+1)
+//   packArray[it] = new RthReconImagePack();
+//   packArray[it].objectName = "coilPack" + (it+1);
+//   splitterArray[it] = new RthReconSplitter();
+//   splitterArray[it].objectName = "splitOutput" + (it+1);
+//   splitterArray[it].setInput(this.sosArray[it].output());
+//   tpArray[it] = new RthImageThreePlaneOutput();
+//   tpArray[it].setInput(this.splitterArray[it].output(0));
+//   xpArray[it]  = new ExportBlock(this.splitterArray[it].output(1),packArray[it].output(),"_echo-" + (it+1));
+// }
