@@ -29,5 +29,9 @@ duration = 0
 [readout]
 type = waveform
 file = physical.spv
-associatedRF = excitationrect
+associatedRF = excitationslr
 loopIndex=0
+
+[spoiler]
+type = waveform
+file = spoiler.spv

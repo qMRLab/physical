@@ -88,7 +88,7 @@
 	<key>absoluteTime</key>
 	<real>4.9243984222412109</real>
 	<key>activeInspector</key>
-	<integer>2</integer>
+	<integer>1</integer>
 	<key>appVersion</key>
 	<string>2.5.2</string>
 	<key>beginAtSS</key>
@@ -128,12 +128,12 @@
 		<key>width</key>
 		<integer>969</integer>
 		<key>x</key>
-		<integer>2149</integer>
+		<integer>-50</integer>
 		<key>y</key>
-		<integer>344</integer>
+		<integer>582</integer>
 	</dict>
 	<key>maxReadoutRate</key>
-	<real>500</real>
+	<real>125</real>
 	<key>nominalGradLimitScale</key>
 	<real>1</real>
 	<key>numRfRxChannels</key>
