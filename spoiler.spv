@@ -84,7 +84,7 @@
 				<key>yRiseOverlap</key>
 				<real>1</real>
 				<key>z0Component</key>
-				<real>0.0</real>
+				<real>1</real>
 				<key>zFallOverlap</key>
 				<real>1</real>
 				<key>zPlateauOverlap</key>
@@ -118,7 +118,7 @@
 	<key>absoluteTime</key>
 	<real>2.7999999999999998</real>
 	<key>activeInspector</key>
-	<integer>1</integer>
+	<integer>2</integer>
 	<key>appVersion</key>
 	<string>2.5.2</string>
 	<key>beginAtSS</key>
@@ -154,13 +154,13 @@
 	<key>mainWindowFrame</key>
 	<dict>
 		<key>height</key>
-		<integer>1280</integer>
+		<integer>827</integer>
 		<key>width</key>
 		<integer>1133</integer>
 		<key>x</key>
 		<integer>176</integer>
 		<key>y</key>
-		<integer>102</integer>
+		<integer>50</integer>
 	</dict>
 	<key>maxReadoutRate</key>
 	<real>125</real>
@@ -190,7 +190,7 @@
 			<key>showYValues</key>
 			<integer>0</integer>
 			<key>viewBottom</key>
-			<real>948</real>
+			<real>495</real>
 			<key>viewHeight</key>
 			<real>253</real>
 			<key>viewLeft</key>
@@ -218,7 +218,7 @@
 			<key>showValues</key>
 			<integer>0</integer>
 			<key>viewBottom</key>
-			<real>724</real>
+			<real>271</real>
 			<key>viewHeight</key>
 			<real>214</real>
 			<key>viewLeft</key>
@@ -238,7 +238,7 @@
 			<key>pluginVersion</key>
 			<integer>1</integer>
 			<key>viewBottom</key>
-			<real>676</real>
+			<real>223</real>
 			<key>viewHeight</key>
 			<real>48</real>
 			<key>viewLeft</key>
@@ -258,7 +258,7 @@
 			<key>pluginVersion</key>
 			<integer>1</integer>
 			<key>viewBottom</key>
-			<real>1053</real>
+			<real>600</real>
 			<key>viewHeight</key>
 			<real>153</real>
 			<key>viewLeft</key>
