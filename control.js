@@ -80,7 +80,7 @@ RTHLOGGER_WARNING("PHYSICAL Minimum TR: " + minTR);
 var minTE = rfEnd - rfPeak + SB.readout['<E1R>.readoutCenter'];
 //var startingTE = minTE + rth.apdKey("echodelay/duration")/1000; //ms
 // Hardcode to 3.5
-var startingTE = 3.5; 
+var startingTE = minTE; 
 rth.informationInsert(sequenceId,"mri.EchoTime",startingTE);
 RTHLOGGER_WARNING("Starting TE: " + startingTE);
 
@@ -123,11 +123,11 @@ function updateSequenceParams(selected){
       }));
       rth.addCommand(new RthUpdateEnableBlockCommand(sequenceId, "excitationrect", false));
       rth.addCommand(new RthUpdateEnableBlockCommand(sequenceId, "excitationslr", true));
-      var rfEnd = SB.excitationslr["<Slice Select Gradient>.end"];
-      var rfPeak = SB.excitationslr["<RF>.peak"];
+      var rfEnd = SB.excitationslr["<SLR Excitation>.end"];
+      var rfPeak = SB.excitationslr["<SLR Excitation>.peak"];
       // This is critical
       minTE = rfEnd - rfPeak + SB.readout['<E1R>.readoutCenter'];
-      RTHLOGGER_WARNING("Minimum TE SINC: " + minTE);
+      RTHLOGGER_WARNING("Minimum TE SLR: " + minTE);
       controlWidget.inputWidget_TE.value = echoTime;
       rth.addCommand(new RthUpdateChangeMRIParameterCommand(sequenceId,{
         EchoTime: echoTime
@@ -237,7 +237,7 @@ controlWidget.inputWidget_TR.value   = minTR;
 
 controlWidget.inputWidget_TE.minimum = minTE;
 controlWidget.inputWidget_TE.maximum = 10;
-controlWidget.inputWidget_TE.value   = 3.5;
+controlWidget.inputWidget_TE.value   = minTE + 0.1;
 
 
 function sessionClicked(chck){

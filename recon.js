@@ -41,18 +41,47 @@ function reconBlock(input,indexTR,indexEcho) {
 
 // acquisition.<E1R>.index --> 0 to 123 
 // acquisition.<inter>.input --> 0/1 
- this.sort3d = new RthReconSort();
- this.sort3d.objectName = "sort-TR" + indexTR + "E" + indexEcho;
+
+
+ //this.imageSort = new RthReconRawToImageSortMS();
+ //this.imageSort.objectName = "sort-Img" + indexTR + "E" + indexEcho;
+
+  // this.discard = new RthReconPassThrough();
+  // this.discard.objectName = "Discard" + indexTR + "E" + indexEcho;
+  // this.discard.setDisableCount(107);
+  // this.discard.observeKeys(["reconstruction.echoChanged",
+  //                           "acquisition.<interleave>.input",
+  //                           "reconstruction.preacquisitions"]);
+  // this.discard.observedKeysChanged.connect(function(keys){
+  //   //var echoTrainLength = keys["mri.EchoTrainLength"];
+  //   var preacquisitions = keys["reconstruction.preacquisitions"];
+  //   that.discard.setEnableCount(107);
+  //   that.discard.activate();
+  // });
+  // this.discard.setInput(input);
+
+ // this.sort3d = new RthReconSort();
+ this.sort3d = new RthReconRawToImageSortMS();
+ this.sort3d.objectName = "sortImg-TR" + indexTR + "E" + indexEcho;
  //this.sort3d.setInput(this.attenSplit.output(1));
  this.sort3d.setInput(input);
  this.sort3d.setIndexKeys(["reconstruction.echo" + (indexEcho+1) + "CartesianIdx","reconstruction.echo" + (indexEcho+1) + "Z" + indexTR]);
  //this.sort3d.observeKeys(["mri.RunNumber"]);
+//  if (indexEcho %  2 === 0 ){
+//   RTHLOGGER_WARNING("Direction changed " + indexEcho);
+//   this.sort3d.flipReadout = true;
+//  }
  this.sort3d.observeKeys(["reconstruction.echoChanged","acquisition.<interleave>.input"]);
  this.sort3d.observedKeysChanged.connect(
   function(keys) {
     that.sort3d.resetAccumulation();
     
     RTHLOGGER_WARNING("Echo changed" + keys["reconstruction.echoChanged"]);
+
+    // if (indexEcho %  keys["reconstruction.echoChanged"] === 0 ){
+    //   that.sort3d.flipReadout = true;
+    //  }
+
     RTHLOGGER_WARNING("Interleave" + keys["acquisition.<interleave>.input"]);
     RTHLOGGER_WARNING("Idx " + indexEcho + "echo" + keys["reconstruction.echo" + (indexEcho+1) + "CartesianIdx"]);
     RTHLOGGER_WARNING("Sample received" + keys["reconstruction.echo" + (indexEcho+1) + "Samples"]);
@@ -535,18 +564,45 @@ var packArray = new Array();
 var splitterArray = new Array();
 var tpArray = new Array();
 var xpArray = new Array();
+var radiologicRotation = new Array();
+var unwarp = new Array();
+var absArray = new Array();
 
 
 var it = 0;
 for (var curTR=0; curTR<=1; curTR++){
   for (var echoIdx=0; echoIdx<=6; echoIdx++){
+
+    // SOS coil combination
     sosArray[it] = new RthReconImageSumOfSquares();
     sosArray[it].objectName = "SoS" + (it+1)
+
+    // Pack raw data from multiple coils 
     packArray[it] = new RthReconImagePack();
     packArray[it].objectName = "coilPack" + (it+1);
     splitterArray[it] = new RthReconSplitter();
+
+    // Gradien unwarp
+    unwarp[it] = new RthReconImageGradWarp();
+    if (unwarp[it].isEmpty){
+      RTHLOGGER_WARNING("GradWarp coefs are empty " + curTR + " " + echoIdx);
+    }
+    unwarp[it].objectName = "Unwarp" + (it+1);
+    unwarp[it].setKernelRadius(2);
+    unwarp[it].setInput(this.sosArray[it].output());
+
+    // Export abs 
+    absArray[it] = new RthReconImageAbs();
+    absArray[it].objectName = "Abs" + (it+1);
+    absArray[it].setInput(unwarp[it].output());
+
+    radiologicRotation[it] = new RthReconImageOrientation();
+    radiologicRotation[it].objectName = "Orient" + (it+1);
+    radiologicRotation[it].setUpdateGeometry(true);
+    radiologicRotation[it].setInput(absArray[it].output());
+
     splitterArray[it].objectName = "splitOutput" + (it+1);
-    splitterArray[it].setInput(this.sosArray[it].output());
+    splitterArray[it].setInput(radiologicRotation[it].output());
     tpArray[it] = new RthImageThreePlaneOutput();
     tpArray[it].setInput(this.splitterArray[it].output(0));
     if (curTR == 0){
