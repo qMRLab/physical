@@ -62,7 +62,7 @@
      <item>
       <widget class="RthParameterInputWidget" name="inputWidget_TR">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -105,7 +105,7 @@
        <item>
         <widget class="QCheckBox" name="checkBox_RECT">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="text">
           <string>RECT</string>

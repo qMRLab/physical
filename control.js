@@ -68,8 +68,16 @@ var rfPeak = SB.excitationslr["<SLR Excitation>.peak"];
 var scannerTR = new RthUpdateGetTRCommand(sequenceId, [], []);
 rth.addCommand(scannerTR);
 var minTR = scannerTR.tr();
-var startingTR = 20;
+var minTRRF = scannerTR.minTRRF();
+var minTRGradient = scannerTR.minTRGradient();
+var minTRPulses = scannerTR.minTRPulses();
+
+
+// var startingTR = 20;
 RTHLOGGER_WARNING("PHYSICAL Minimum TR: " + minTR);
+RTHLOGGER_WARNING("PHYSICAL Minimum TRRF: " + minTRRF);
+RTHLOGGER_WARNING("PHYSICAL Minimum TRGrad: " + minTRGrad);
+RTHLOGGER_WARNING("PHYSICAL Minimum TRPulses: " + minTRPulses);
 
 //var scannerTR0 = new RthUpdateGetTRCommand(sequenceId, [0,0,0,1], []);
 //var scannerTR1 = new RthUpdateGetTRCommand(sequenceId, [0,0,0,1], [1]);
@@ -158,7 +166,7 @@ displayTools.setSliceThickness(startingThickness*10);
 var sliceThickness = startingThickness;
 var fieldOfView = startingFOV;
 
-var repetitionTime = startingTR;
+// var repetitionTime = startingTR;
 
 rth.informationInsert(sequenceId,"mri.VoxelSpacing",[fieldOfView/xPixels*10,fieldOfView/phaseEncodes*10,startingZFOV/zPartitions*10]);
 rth.addCommand(new RthUpdateChangeSliceThicknessCommand(sequenceId, startingZFOV/zPartitions*10));
@@ -180,15 +188,15 @@ function changeFOV(fov){
   fieldOfView = fov;
 }
 
-// This will change TR1, which is set as the global TR. 
-// SpinBench sets TR2 using JS logic w.r.t N
-function changeTR1(tr1) {
+  // This will change TR1, which is set as the global TR. 
+  // SpinBench sets TR2 using JS logic w.r.t N
+  // function changeTR1(tr1) {
 
-  rth.addCommand(new RthUpdateIntParameterCommand(sequenceId, "", "setDesiredTR", "", (tr1)*1000));
-  rth.addCommand(new RthUpdateChangeMRIParameterCommand(sequenceId, "RepetitionTime", tr1));
+//    rth.addCommand(new RthUpdateIntParameterCommand(sequenceId, "", "setDesiredTR", "", (tr1)*1000));
+//    rth.addCommand(new RthUpdateChangeMRIParameterCommand(sequenceId, "RepetitionTime", tr1));
 
-  curTR1 = tr1;
-}
+//    curTR1 = tr1;
+//  }
 
 
 function changeTE(te)
@@ -338,8 +346,8 @@ acqClicked(controlWidget.isAcqBIDS.checked)
 controlWidget.inputWidget_FOV.valueChanged.connect(changeFOV);
 changeFOV(controlWidget.inputWidget_FOV.value);
 
-controlWidget.inputWidget_TR.valueChanged.connect(changeTR1);
-changeTR1(controlWidget.inputWidget_TR.value);
+//controlWidget.inputWidget_TR.valueChanged.connect(changeTR1);
+//changeTR1(controlWidget.inputWidget_TR.value);
 
 controlWidget.inputWidget_TE.valueChanged.connect(changeTE);
 changeTE(controlWidget.inputWidget_TE.value);
