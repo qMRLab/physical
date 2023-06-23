@@ -60,8 +60,8 @@ function reconBlock(input,indexTR,indexEcho) {
   // });
   // this.discard.setInput(input);
 
- // this.sort3d = new RthReconSort();
- this.sort3d = new RthReconRawToImageSortMS();
+ this.sort3d = new RthReconSort();
+ //this.sort3d = new RthReconRawToImageSortMS();
  this.sort3d.objectName = "sortImg-TR" + indexTR + "E" + indexEcho;
  //this.sort3d.setInput(this.attenSplit.output(1));
  this.sort3d.setInput(input);
